@@ -1,8 +1,10 @@
 package com.ravenpack.userflagapp.service.implementation;
 
 import com.ravenpack.userflagapp.connector.ScoringServiceConnector;
+import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
 import com.ravenpack.userflagapp.model.MessageScore;
 import com.ravenpack.userflagapp.model.TranslatedMessage;
+import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.MessageTranslationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,29 +24,43 @@ import static org.mockito.Mockito.when;
 class ScoringServiceImplTest {
 
     @Mock
-    private MessageTranslationService messageTranslationService;
+    private MessageTranslationService messageTranslationServiceMock;
 
     @Mock
-    private ScoringServiceConnector scoringServiceConnector;
+    private ScoringServiceConnector scoringServiceConnectorMock;
 
     @InjectMocks
     private ScoringServiceImpl sut;
 
     @Test
     void getMessageScoresShouldReturnTheMessageScoreMap() {
-        final List<TranslatedMessage> translatedMessages = getTranslatedMessages();
+        when(scoringServiceConnectorMock.messageScore(any())).thenReturn(1f);
 
-        when(scoringServiceConnector.messageScore(any())).thenReturn(1f);
-
-        final Map<String, MessageScore> actual = sut.getMessageScores(translatedMessages);
-        final Map<String, MessageScore> expected = getMessagesScores();
+        var actual = sut.getMessageScores(translatedMessages());
+        var expected = messagesScores();
 
         assertThat(actual.get("1")).isEqualTo(expected.get("1"));
         assertThat(actual.get("2")).isEqualTo(expected.get("2"));
         assertThat(actual.get("3")).isEqualTo(expected.get("3"));
     }
 
-    private static List<TranslatedMessage> getTranslatedMessages() {
+    @Test
+    void getAggregatedScoresShouldReTurnTheAggregatedScoresList() {
+        when(messageTranslationServiceMock.translateMessages(any())).thenReturn(translatedMessages());
+        when(scoringServiceConnectorMock.messageScore(any())).thenReturn(0.5f);
+
+        final List<AggregatedUserMessageOutput> actual = sut.getAggregatedScores(userMessageInput());
+
+        final List<AggregatedUserMessageOutput> expected = List.of(
+                new AggregatedUserMessageOutput("1", 1, 0.5f),
+                new AggregatedUserMessageOutput("2", 2, 0.5f),
+                new AggregatedUserMessageOutput("3", 3, 0.5f)
+        );
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static List<TranslatedMessage> translatedMessages() {
         return List.of(
                 new TranslatedMessage("1", "message 1"),
                 new TranslatedMessage("2", "message 2 a"),
@@ -54,7 +70,17 @@ class ScoringServiceImplTest {
                 new TranslatedMessage("3", "message 3 c"));
     }
 
-    private static Map<String, MessageScore> getMessagesScores() {
+    private static List<UserMessageInput> userMessageInput() {
+        return List.of(
+                new UserMessageInput("1", "message 1"),
+                new UserMessageInput("2", "message 2 a"),
+                new UserMessageInput("2", "message 2 b"),
+                new UserMessageInput("3", "message 3 a"),
+                new UserMessageInput("3", "message 3 b"),
+                new UserMessageInput("3", "message 3 c"));
+    }
+
+    private static Map<String, MessageScore> messagesScores() {
         return new HashMap<>() {{
             put("1", new MessageScore(1, 1f));
             put("2", new MessageScore(2, 2f));

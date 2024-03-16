@@ -8,10 +8,10 @@ import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.MessageTranslationService;
 import com.ravenpack.userflagapp.service.ScoringService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ScoringServiceImpl implements ScoringService {
 
@@ -30,8 +30,7 @@ public class ScoringServiceImpl implements ScoringService {
 
         final Map<String, MessageScore> messageScores = getMessageScores(translatedMessages);
 
-        // then make a call to the scoring service
-        // TODO: need to check if opencsv can handle a map
+//      TODO: need to check if opencsv can handle a map
         return aggregatedUserMessageMapper(messageScores);
     }
 
@@ -62,8 +61,15 @@ public class ScoringServiceImpl implements ScoringService {
         return messageScore;
     }
 
+    /**
+     * TODO: consider removing this mapper and write straight to the csv
+     */
     private List<AggregatedUserMessageOutput> aggregatedUserMessageMapper(Map<String, MessageScore> messageScoreMap) {
-        return new ArrayList<>();
+        return messageScoreMap
+                .entrySet()
+                .stream()
+                .map(messageScore -> new AggregatedUserMessageOutput(messageScore.getKey(), messageScore.getValue().totalMessages(), messageScore.getValue().averageScore()))
+                .collect(Collectors.toList());
     }
 
 }

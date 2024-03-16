@@ -13,7 +13,7 @@ public class UserMessageServiceImpl implements UserMessageService {
     private final CSVHandlerService csvHandlerService;
     private final ScoringService scoringService;
 
-    public UserMessageServiceImpl(final CSVHandlerService csvHandlerService, ScoringService scoringService) {
+    public UserMessageServiceImpl(final CSVHandlerService csvHandlerService, final ScoringService scoringService) {
         this.csvHandlerService = csvHandlerService;
         this.scoringService = scoringService;
     }
