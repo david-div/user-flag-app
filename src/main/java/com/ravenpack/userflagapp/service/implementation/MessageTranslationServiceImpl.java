@@ -27,9 +27,9 @@ public class MessageTranslationServiceImpl implements MessageTranslationService 
         final List<TranslatedMessage> translatedMessages = new ArrayList<>();
 
         for (final UserMessageInput userMessageInput : userMessageInputs) {
-            final String translatedMessage = translateMessage(userMessageInput.message());
+            final String translatedMessage = translateMessage(userMessageInput.getMessage());
             translatedMessages.add(
-                    new TranslatedMessage(userMessageInput.userId(), translatedMessage)
+                    new TranslatedMessage(userMessageInput.getUserId(), translatedMessage)
             );
         }
 
