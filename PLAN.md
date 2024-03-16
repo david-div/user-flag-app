@@ -97,3 +97,10 @@ e) You may spend as much time as you like, but a few hours should be sufficient.
 f) Please submit the source code with a README file with instructions on how to build and run it
 
 g) We will evaluate the exercise considering the correctness, implementation, style, readability and test coverage.
+
+---
+
+### My considerations / during / after thoughts:
+
+It could be worth translating the message and then making the call to the scoring service with that response.
+This would reduce the need to map back to a list.
