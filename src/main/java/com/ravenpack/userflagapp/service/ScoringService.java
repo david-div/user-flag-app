@@ -5,8 +5,6 @@ import com.ravenpack.userflagapp.model.UserMessageInput;
 
 import java.util.List;
 
-public interface CSVHandlerService {
-    List<UserMessageInput> userMessageInputs();
-
-    void writeAggregateUserMessageScores(List<AggregatedUserMessageOutput> aggregatedUserMessageOutput);
+public interface ScoringService {
+    List<AggregatedUserMessageOutput> getAggregatedScores(List<UserMessageInput> userMessageInputs);
 }
