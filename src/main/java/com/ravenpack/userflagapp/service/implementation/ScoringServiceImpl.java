@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Service responsible for aggregation the message scores
+ */
 public class ScoringServiceImpl implements ScoringService {
 
     private final MessageTranslationService messageTranslationService;
@@ -25,7 +28,6 @@ public class ScoringServiceImpl implements ScoringService {
 
     @Override
     public List<AggregatedUserMessageOutput> getAggregatedScores(final List<UserMessageInput> userMessageInputs) {
-        // make the call to the translation service
         final List<TranslatedMessage> translatedMessages = messageTranslationService.translateMessages(userMessageInputs);
 
         final Map<String, MessageScore> messageScores = getMessageScores(translatedMessages);
@@ -40,19 +42,23 @@ public class ScoringServiceImpl implements ScoringService {
      */
     public Map<String, MessageScore> getMessageScores(final List<TranslatedMessage> translatedMessages) {
         final Map<String, MessageScore> messageScore = new HashMap<>();
+        final int totalStartingMessages = 1;
+        final int messageIncrement = 1;
+
         for (TranslatedMessage translatedMessage : translatedMessages) {
 
             float score = scoringServiceConnector.messageScore(translatedMessage.message());
             final String userId = translatedMessage.userId();
 
             if (!messageScore.containsKey(userId)) {
-                messageScore.put(userId, new MessageScore(1, score));
+                final MessageScore startingScore = new MessageScore(totalStartingMessages, score);
+                messageScore.put(userId, startingScore);
             } else {
                 final MessageScore messageScoreUser = messageScore.get(userId);
                 final int totalMessages = messageScoreUser.totalMessages();
                 final float totalScore = messageScoreUser.totalScore();
 
-                final MessageScore updatedMessageScore = new MessageScore(totalMessages + 1, totalScore + score);
+                final MessageScore updatedMessageScore = new MessageScore(totalMessages + messageIncrement, totalScore + score);
 
                 messageScore.put(userId, updatedMessageScore);
             }
