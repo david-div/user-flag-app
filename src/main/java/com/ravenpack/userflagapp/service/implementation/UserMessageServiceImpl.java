@@ -12,5 +12,7 @@ public class UserMessageServiceImpl implements UserMessageService {
     }
 
     @Override
-    public void getOffensiveMessageScoresCSV() {}
+    public void getOffensiveMessageScoresCSV() {
+        csvHandlerService.userMessageInputs();
+    }
 }
