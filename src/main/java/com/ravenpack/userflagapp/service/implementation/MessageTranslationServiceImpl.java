@@ -1,8 +1,9 @@
-package com.ravenpack.userflagapp.service;
+package com.ravenpack.userflagapp.service.implementation;
 
 import com.ravenpack.userflagapp.connector.MessageTranslationConnector;
 import com.ravenpack.userflagapp.model.TranslatedMessage;
 import com.ravenpack.userflagapp.model.UserMessageInput;
+import com.ravenpack.userflagapp.service.MessageTranslationService;
 
 import java.util.ArrayList;
 import java.util.List;

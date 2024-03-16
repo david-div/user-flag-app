@@ -3,6 +3,7 @@ package com.ravenpack.userflagapp.service;
 import com.ravenpack.userflagapp.connector.MessageTranslationConnector;
 import com.ravenpack.userflagapp.model.TranslatedMessage;
 import com.ravenpack.userflagapp.model.UserMessageInput;
+import com.ravenpack.userflagapp.service.implementation.MessageTranslationServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

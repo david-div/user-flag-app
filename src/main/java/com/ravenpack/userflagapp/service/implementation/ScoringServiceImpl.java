@@ -47,6 +47,10 @@ public class ScoringServiceImpl implements ScoringService {
 
         for (TranslatedMessage translatedMessage : translatedMessages) {
 
+            /**
+             * TODO: maybe make the call to the translation service here
+             * So we wouldn't need to write to another list
+             */
             float score = scoringConnector.getMessageScore(translatedMessage.message());
             final String userId = translatedMessage.userId();
 
