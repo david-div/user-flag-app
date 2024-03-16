@@ -30,7 +30,7 @@ class UserMessageServiceImplTest {
     @Test
     void getOffensiveMessageScoresCSVShouldCallTheCorrectServices() {
         final List<UserMessageInput> userMessageInputs = new ArrayList<>();
-        final AggregatedUserMessageOutput aggregatedUserMessageOutput = new AggregatedUserMessageOutput("1",1, 1f);
+        final AggregatedUserMessageOutput aggregatedUserMessageOutput = new AggregatedUserMessageOutput("1", 1, 1f);
 
         when(csvHandlerServiceMock.userMessageInputs()).thenReturn(userMessageInputs);
         when(scoringServiceMock.getAggregatedScores(userMessageInputs)).thenReturn(List.of(aggregatedUserMessageOutput));
