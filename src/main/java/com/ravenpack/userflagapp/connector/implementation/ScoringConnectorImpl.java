@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import static com.ravenpack.userflagapp.helper.LatencyHelper.MOCK_LATENCY_MS;
+
 /**
  * Scoring connect used to call the external Scoring Service
  */
@@ -30,13 +32,8 @@ public class ScoringConnectorImpl implements ScoringConnector {
         LOG.info("Getting message score for message: [{}]", message);
         LOG.warn("End point is currently mocked");
 
-        float minLatencyExpectedMs = 50f / 1000f;
-        float maxLatencyExpectedMs = 200f / 1000f;
-
-        final double mockLatencyDelayInMs = new Random().nextFloat(minLatencyExpectedMs, maxLatencyExpectedMs);
-
         try {
-            TimeUnit.MILLISECONDS.sleep((long) mockLatencyDelayInMs);
+            TimeUnit.MILLISECONDS.sleep(MOCK_LATENCY_MS);
             return new Random().nextFloat();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
