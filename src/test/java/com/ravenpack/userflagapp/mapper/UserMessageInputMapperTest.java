@@ -12,9 +12,7 @@ class UserMessageInputMapperTest {
 
     @Test
     void fromUserMessageInputShouldReturnTheUserMessage() {
-        final UserMessageInput userMessageInput = new UserMessageInput();
-        userMessageInput.setUserId("id");
-        userMessageInput.setMessage("message");
+        final UserMessageInput userMessageInput = new UserMessageInput("id", "message");
 
         final List<UserMessage> actual = UserMessageInputMapper.toUserMessage(List.of(userMessageInput));
         final List<UserMessage> expected = List.of(new UserMessage("id", "message"));

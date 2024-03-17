@@ -1,20 +1,21 @@
 package com.ravenpack.userflagapp.service.implementation;
 
-import com.opencsv.bean.CsvToBeanBuilder;
 import com.ravenpack.userflagapp.model.MessageScore;
 import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.CsvHandlerService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,35 +37,55 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
 
     @Override
     public List<UserMessageInput> userMessageInputs() {
-
         LOG.info("Reading input file with path: [{}]", csvPathInput);
 
-        final File file = new File(csvPathInput);
+        final String[] headers = {"user_id", "message"};
+        final List<UserMessageInput> userMessageInputs = new ArrayList<>();
 
         try {
-            return new CsvToBeanBuilder(new FileReader(file))
-                    .withType(UserMessageInput.class).build()
-                    .parse();
+            final Reader in = new FileReader(csvPathInput);
+
+            final CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
+                    .setHeader(headers)
+                    .setSkipHeaderRecord(true)
+                    .build();
+
+            final Iterable<CSVRecord> records = csvFormat.parse(in);
+
+            for (final CSVRecord record : records) {
+                final String userId = record.get("user_id");
+                final String message = record.get("message");
+                userMessageInputs.add(new UserMessageInput(userId, message));
+            }
+
         } catch (Exception e) {
-            LOG.error("Unable to find file or map to class");
+            LOG.error("Unable to read file with error [{}]", e.getMessage());
             throw new RuntimeException(e);
         }
+
+        return userMessageInputs;
     }
 
     @Override
     public void writeAggregateUserMessageScores(final Map<String, MessageScore> aggregatedUserMessages) {
-        LOG.info("Writing csv file with output: [{}]", aggregatedUserMessages);
+        LOG.info("Writing csv file with output: [{}] to path [{}]", aggregatedUserMessages, csvPathOutput);
+        final String[] headers = {"user_id", "total_messages", "avg_score"};
 
         try (CSVPrinter csvPrinter = new CSVPrinter(new FileWriter(csvPathOutput), CSVFormat.DEFAULT)) {
-            csvPrinter.printRecord("user_id", "total_messages", "avg_score");
+            csvPrinter.printRecord(headers);
 
             final Set<String> userIds = aggregatedUserMessages.keySet();
 
             for (String userId : userIds) {
-                csvPrinter.printRecord(userId, aggregatedUserMessages.get(userId).totalMessages(), aggregatedUserMessages.get(userId).averageScore());
+                final MessageScore messageScore = aggregatedUserMessages.get(userId);
+
+                csvPrinter.printRecord(
+                        userId,
+                        messageScore.totalMessages(),
+                        messageScore.averageScore());
             }
         } catch (IOException e) {
-            LOG.error("Unable to write to file: [{}]", e);
+            LOG.error("Unable to write to file, with error: [{}]", e.getMessage());
             throw new RuntimeException(e);
         }
     }

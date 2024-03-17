@@ -23,8 +23,8 @@ class CsvHandlerServiceImplTest {
         final List<UserMessageInput> actual = sut.userMessageInputs();
 
         assertThat(actual.size()).isEqualTo(4);
-        assertThat(actual.get(0).getUserId()).isEqualTo("1");
-        assertThat(actual.get(0).getMessage()).isEqualTo("this is my message");
+        assertThat(actual.get(0).userId()).isEqualTo("1");
+        assertThat(actual.get(0).message()).isEqualTo("this is my message");
     }
 
     @Test

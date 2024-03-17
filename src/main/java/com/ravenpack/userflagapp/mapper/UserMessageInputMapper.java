@@ -14,7 +14,7 @@ public class UserMessageInputMapper {
     public static List<UserMessage> toUserMessage(List<UserMessageInput> userMessageInputs) {
         return userMessageInputs
                 .stream()
-                .map(userMessageInput -> new UserMessage(userMessageInput.getUserId(), userMessageInput.getMessage()))
+                .map(userMessageInput -> new UserMessage(userMessageInput.userId(), userMessageInput.message()))
                 .collect(Collectors.toList());
     }
 }
