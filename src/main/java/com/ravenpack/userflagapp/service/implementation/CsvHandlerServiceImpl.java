@@ -75,7 +75,7 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
         final String[] headers = {"user_id", "total_messages", "avg_score"};
 
         try (CSVPrinter csvPrinter = new CSVPrinter(new FileWriter(csvPathOutput), CSVFormat.DEFAULT)) {
-            csvPrinter.printRecord(headers);
+            csvPrinter.printRecord((Object[]) headers);
 
             final Set<String> userIds = aggregatedUserMessages.keySet();
 
