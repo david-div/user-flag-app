@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserMessageMapperTest {
+class UserMessageInputMapperTest {
 
     @Test
     void fromUserMessageInputShouldReturnTheUserMessage() {
@@ -16,7 +16,7 @@ class UserMessageMapperTest {
         userMessageInput.setUserId("id");
         userMessageInput.setMessage("message");
 
-        final List<UserMessage> actual = UserMessageMapper.fromUserMessageInput(List.of(userMessageInput));
+        final List<UserMessage> actual = UserMessageInputMapper.toUserMessage(List.of(userMessageInput));
         final List<UserMessage> expected = List.of(new UserMessage("id", "message"));
 
         assertThat(actual).isEqualTo(expected);
