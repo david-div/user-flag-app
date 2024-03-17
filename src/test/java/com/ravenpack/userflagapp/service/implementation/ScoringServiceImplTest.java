@@ -1,11 +1,10 @@
 package com.ravenpack.userflagapp.service.implementation;
 
+import com.ravenpack.userflagapp.connector.MessageTranslationConnector;
 import com.ravenpack.userflagapp.connector.ScoringConnector;
 import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
 import com.ravenpack.userflagapp.model.MessageScore;
-import com.ravenpack.userflagapp.model.TranslatedMessage;
 import com.ravenpack.userflagapp.model.UserMessage;
-import com.ravenpack.userflagapp.service.MessageTranslationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,7 +23,7 @@ import static org.mockito.Mockito.when;
 class ScoringServiceImplTest {
 
     @Mock
-    private MessageTranslationService messageTranslationServiceMock;
+    private MessageTranslationConnector messageTranslatorConnectorMock;
 
     @Mock
     private ScoringConnector scoringConnectorMock;
@@ -36,7 +35,7 @@ class ScoringServiceImplTest {
     void getMessageScoresShouldReturnTheMessageScoreMap() {
         when(scoringConnectorMock.getMessageScore(any())).thenReturn(1f);
 
-        var actual = sut.getMessageScores(translatedMessages());
+        var actual = sut.getMessageScores(userMessages());
         var expected = messagesScores();
 
         assertThat(actual.get("1")).isEqualTo(expected.get("1"));
@@ -46,7 +45,7 @@ class ScoringServiceImplTest {
 
     @Test
     void getAggregatedScoresShouldReTurnTheAggregatedScoresList() {
-        when(messageTranslationServiceMock.translateMessages(any())).thenReturn(translatedMessages());
+        when(messageTranslatorConnectorMock.translate(any())).thenReturn("message translated");
         when(scoringConnectorMock.getMessageScore(any())).thenReturn(0.5f);
 
         final List<AggregatedUserMessageOutput> actual = sut.getAggregatedScores(userMessageInput());
@@ -60,14 +59,14 @@ class ScoringServiceImplTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static List<TranslatedMessage> translatedMessages() {
+    private static List<UserMessage> userMessages() {
         return List.of(
-                new TranslatedMessage("1", "message 1"),
-                new TranslatedMessage("2", "message 2 a"),
-                new TranslatedMessage("2", "message 2 b"),
-                new TranslatedMessage("3", "message 3 a"),
-                new TranslatedMessage("3", "message 3 b"),
-                new TranslatedMessage("3", "message 3 c"));
+                new UserMessage("1", "message 1"),
+                new UserMessage("2", "message 2 a"),
+                new UserMessage("2", "message 2 b"),
+                new UserMessage("3", "message 3 a"),
+                new UserMessage("3", "message 3 b"),
+                new UserMessage("3", "message 3 c"));
     }
 
     private static List<UserMessage> userMessageInput() {
