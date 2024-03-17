@@ -10,12 +10,15 @@ import java.util.concurrent.TimeUnit;
 
 import static com.ravenpack.userflagapp.helper.LatencyHelper.MOCK_LATENCY_MS;
 
+/**
+ * An implementation of the {@link MessageTranslationConnector} that will make a call to the external service
+ */
 @Component
 public class MessageTranslationConnectorImpl implements MessageTranslationConnector {
     public static final Logger LOG = LoggerFactory.getLogger(MessageTranslationConnectorImpl.class);
 
     @Override
-    @Cacheable
+    @Cacheable("translatedMessages")
     public String translate(String message) {
         LOG.info("Translating message: [{}]", message);
         LOG.warn("End point is currently mocked");

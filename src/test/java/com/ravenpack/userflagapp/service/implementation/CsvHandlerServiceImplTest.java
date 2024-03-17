@@ -1,6 +1,6 @@
 package com.ravenpack.userflagapp.service.implementation;
 
-import com.ravenpack.userflagapp.model.MessageScore;
+import com.ravenpack.userflagapp.model.MessageScoreOutput;
 import com.ravenpack.userflagapp.model.UserMessageInput;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
@@ -29,24 +29,24 @@ class CsvHandlerServiceImplTest {
 
     @Test
     void writeAggregateUserMessageScoresShouldWriteTheCsv() {
-        final HashMap<String, MessageScore> aggregatedUserMessageOutputs = new HashMap<>() {{
-            put("1", new MessageScore(2, 1.5f));
-            put("2", new MessageScore(4, 3.2f));
-            put("3", new MessageScore(6, 6.0f));
-            put("4", new MessageScore(8, 6.2f));
+        final HashMap<String, MessageScoreOutput> aggregatedMessageScoreOutput = new HashMap<>() {{
+            put("1", new MessageScoreOutput(2, 1.5f));
+            put("2", new MessageScoreOutput(4, 3.2f));
+            put("3", new MessageScoreOutput(6, 6.0f));
+            put("4", new MessageScoreOutput(8, 6.2f));
         }};
 
-        sut.writeAggregateUserMessageScores(aggregatedUserMessageOutputs);
+        sut.writeAggregateUserMessageScores(aggregatedMessageScoreOutput);
 
         final File actual = new File(testFilePathOutput);
 
         assertThat(actual).exists();
         assertThat(linesOf(actual)).containsExactly(
                 "user_id,total_messages,avg_score",
-                "1,2,0.75",
-                "2,4,0.8",
-                "3,6,1.0",
-                "4,8,0.775"
+                "1,2,1.5",
+                "2,4,3.2",
+                "3,6,6.0",
+                "4,8,6.2"
         );
     }
 

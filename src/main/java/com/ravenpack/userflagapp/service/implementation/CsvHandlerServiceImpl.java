@@ -1,6 +1,6 @@
 package com.ravenpack.userflagapp.service.implementation;
 
-import com.ravenpack.userflagapp.model.MessageScore;
+import com.ravenpack.userflagapp.model.MessageScoreOutput;
 import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.CsvHandlerService;
 import org.apache.commons.csv.CSVFormat;
@@ -67,7 +67,7 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
     }
 
     @Override
-    public void writeAggregateUserMessageScores(final Map<String, MessageScore> aggregatedUserMessages) {
+    public void writeAggregateUserMessageScores(final Map<String, MessageScoreOutput> aggregatedUserMessages) {
         LOG.info("Writing csv file with output: [{}] to path [{}]", aggregatedUserMessages, csvPathOutput);
         final String[] headers = {"user_id", "total_messages", "avg_score"};
 
@@ -77,12 +77,12 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
             final Set<String> userIds = aggregatedUserMessages.keySet();
 
             for (String userId : userIds) {
-                final MessageScore messageScore = aggregatedUserMessages.get(userId);
+                final MessageScoreOutput messageScore = aggregatedUserMessages.get(userId);
 
                 csvPrinter.printRecord(
                         userId,
                         messageScore.totalMessages(),
-                        messageScore.averageScore());
+                        messageScore.avgScore());
             }
         } catch (IOException e) {
             LOG.error("Unable to write to file, with error: [{}]", e.getMessage());

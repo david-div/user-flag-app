@@ -1,6 +1,7 @@
 package com.ravenpack.userflagapp.service.implementation;
 
 import com.ravenpack.userflagapp.model.MessageScore;
+import com.ravenpack.userflagapp.model.MessageScoreOutput;
 import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.CsvHandlerService;
@@ -36,6 +37,7 @@ class UserMessageServiceImplTest {
 
         final List<UserMessage> userMessage = new ArrayList<>();
         final Map<String, MessageScore> messageScore = Collections.EMPTY_MAP;
+        final Map<String, MessageScoreOutput> messageScoreOutput = Collections.EMPTY_MAP;
 
         when(csvHandlerServiceMock.userMessageInputs()).thenReturn(userMessageInputs);
         when(scoringServiceMock.getMessageScores(userMessage)).thenReturn(messageScore);
@@ -43,6 +45,6 @@ class UserMessageServiceImplTest {
         sut.getOffensiveMessageScoresCsv();
 
         verify(csvHandlerServiceMock, atLeastOnce()).userMessageInputs();
-        verify(csvHandlerServiceMock, atLeastOnce()).writeAggregateUserMessageScores(messageScore);
+        verify(csvHandlerServiceMock, atLeastOnce()).writeAggregateUserMessageScores(messageScoreOutput);
     }
 }

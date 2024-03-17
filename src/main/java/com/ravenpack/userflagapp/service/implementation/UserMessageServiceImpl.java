@@ -1,5 +1,6 @@
 package com.ravenpack.userflagapp.service.implementation;
 
+import com.ravenpack.userflagapp.mapper.MessageScoreMapper;
 import com.ravenpack.userflagapp.mapper.UserMessageInputMapper;
 import com.ravenpack.userflagapp.model.MessageScore;
 import com.ravenpack.userflagapp.model.UserMessageInput;
@@ -29,6 +30,9 @@ public class UserMessageServiceImpl implements UserMessageService {
         final Map<String, MessageScore> aggregateUserMessage = scoringService.getMessageScores(
                 UserMessageInputMapper.toUserMessage(userMessageInputs)
         );
-        csvHandlerService.writeAggregateUserMessageScores(aggregateUserMessage);
+
+        csvHandlerService.writeAggregateUserMessageScores(
+                MessageScoreMapper.toMessageScoreOutput(aggregateUserMessage)
+        );
     }
 }

@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 import static com.ravenpack.userflagapp.helper.LatencyHelper.MOCK_LATENCY_MS;
 
 /**
- * Scoring connect used to call the external Scoring Service
+ * An implementation of the {@link ScoringConnector} that will make a call to the external service
  */
 @Component
 public class ScoringConnectorImpl implements ScoringConnector {
@@ -22,12 +22,11 @@ public class ScoringConnectorImpl implements ScoringConnector {
 
     /**
      * This is currently a mock and will be implemented at a later date
-     *
-     * @param message a translated message
-     * @return float value between 0 - 1
+     * @param message a message in english
+     * @return float score how offensive the message is valued between 0 - 1
      */
     @Override
-    @Cacheable
+    @Cacheable("messageScores")
     public float getMessageScore(final String message) {
         LOG.info("Getting message score for message: [{}]", message);
         LOG.warn("End point is currently mocked");
