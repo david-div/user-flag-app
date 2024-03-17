@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * An implementation of the {@link CsvHandlerServiceImpl} to read and write the csv file
+ */
 @Service
 public class CsvHandlerServiceImpl implements CsvHandlerService {
     public static final Logger LOG = LoggerFactory.getLogger(CsvHandlerServiceImpl.class);

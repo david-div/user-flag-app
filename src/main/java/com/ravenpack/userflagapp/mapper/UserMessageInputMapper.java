@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Mapper to map the csv object to userMessage input
+ * Mapper to map from the user message input
  */
 public class UserMessageInputMapper {
 

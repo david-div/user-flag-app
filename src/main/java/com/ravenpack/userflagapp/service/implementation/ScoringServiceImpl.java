@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Service responsible for aggregation the message scores
+ * An implementation of the {@link ScoringServiceImpl} responsible aggregating the message scores
  */
 @Service
 public class ScoringServiceImpl implements ScoringService {

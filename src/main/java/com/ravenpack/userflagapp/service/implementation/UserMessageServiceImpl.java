@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * An implementation of the {@link UserMessageServiceImpl} the entry point and orchestration
+ * of the application
+ */
 @Service
 public class UserMessageServiceImpl implements UserMessageService {
 

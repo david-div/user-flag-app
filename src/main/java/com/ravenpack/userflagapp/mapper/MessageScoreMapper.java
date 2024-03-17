@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Mapper to map the message score to the message score output
+ * Mapper to map from message score
  */
 public class MessageScoreMapper {
 

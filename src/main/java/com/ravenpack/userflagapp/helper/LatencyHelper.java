@@ -3,7 +3,7 @@ package com.ravenpack.userflagapp.helper;
 import java.util.Random;
 
 /**
- * Helper class to mock the latency for external calls
+ * Helper class to provide the values for the mock latency time
  */
 public class LatencyHelper {
     public static long MOCK_LATENCY_MS = mockLatencyDelayInMs();
