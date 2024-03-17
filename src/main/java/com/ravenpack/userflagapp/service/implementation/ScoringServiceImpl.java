@@ -5,7 +5,6 @@ import com.ravenpack.userflagapp.connector.ScoringConnector;
 import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
 import com.ravenpack.userflagapp.model.MessageScore;
 import com.ravenpack.userflagapp.model.UserMessage;
-import com.ravenpack.userflagapp.service.MessageTranslationService;
 import com.ravenpack.userflagapp.service.ScoringService;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +19,10 @@ import java.util.stream.Collectors;
 @Service
 public class ScoringServiceImpl implements ScoringService {
 
-    private final MessageTranslationService messageTranslationService;
     private final ScoringConnector scoringConnector;
     private final MessageTranslationConnector messageTranslationConnector;
 
-    public ScoringServiceImpl(final MessageTranslationService messageTranslationService, final ScoringConnector scoringConnector, MessageTranslationConnector messageTranslationConnector) {
-        this.messageTranslationService = messageTranslationService;
+    public ScoringServiceImpl(final ScoringConnector scoringConnector, MessageTranslationConnector messageTranslationConnector) {
         this.scoringConnector = scoringConnector;
         this.messageTranslationConnector = messageTranslationConnector;
     }

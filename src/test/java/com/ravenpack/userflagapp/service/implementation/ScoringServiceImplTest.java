@@ -45,8 +45,8 @@ class ScoringServiceImplTest {
 
     @Test
     void getAggregatedScoresShouldReTurnTheAggregatedScoresList() {
-        when(messageTranslatorConnectorMock.translate(any())).thenReturn("message translated");
-        when(scoringConnectorMock.getMessageScore(any())).thenReturn(0.5f);
+        when(messageTranslatorConnectorMock.translate(any(String.class))).thenReturn("message translated");
+        when(scoringConnectorMock.getMessageScore(any(String.class))).thenReturn(0.5f);
 
         final List<AggregatedUserMessageOutput> actual = sut.getAggregatedScores(userMessageInput());
 
