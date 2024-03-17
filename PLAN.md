@@ -88,7 +88,7 @@ b) Your application needs to perform well even for large input data files with m
 
 c) The Translation and Scoring services are idempotent. Consider the scenario of bots spamming the social network with the same message multiple times.
 
-- I can add caching for this, but may also need to filter out  
+- I can add caching for this, but may also need to filter out duplicates
 
 d) You can write your application in plain Java or use frameworks like Spring/SpringBoot
 
@@ -104,3 +104,17 @@ g) We will evaluate the exercise considering the correctness, implementation, st
 
 It could be worth translating the message and then making the call to the scoring service with that response.
 This would reduce the need to map back to a list.
+
+TODO:
+
+- Map from csv input to UserMessage
+    - and fix those tests
+- Integration tests
+    - Unit and integration tests using the same file...? or producing the same output file?
+    - Actually - I can set that in the constructor for the unit test
+- Mock the latency
+- Filter out duplicates?
+- Logging
+- Comments
+- Readme
+

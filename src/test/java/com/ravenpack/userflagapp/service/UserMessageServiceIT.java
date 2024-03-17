@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.File;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.linesOf;
@@ -26,10 +27,12 @@ class UserMessageServiceIT {
 
         assertThat(file).exists();
         assertThat(linesOf(file)).size().isEqualTo(4);
-        assertThat(linesOf(file).get(0)).contains("user_id,total_messages,avg_score");
-        assertThat(linesOf(file).get(1)).contains("1,2");
-        assertThat(linesOf(file).get(2)).contains("2,2");
-        assertThat(linesOf(file).get(3)).contains("3,3");
+
+        final List<String> lineValues = List.of("user_id,total_messages,avg_score", "1,2", "2,2", "3,3");
+
+        for (int i = 0; i < lineValues.size(); i++) {
+            assertThat(linesOf(file).get(i)).contains(lineValues.get(i));
+        }
     }
 
     @AfterAll
