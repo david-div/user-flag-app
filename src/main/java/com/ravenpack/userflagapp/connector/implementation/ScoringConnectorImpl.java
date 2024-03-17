@@ -5,12 +5,14 @@ import com.ravenpack.userflagapp.service.implementation.ScoringServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
 /**
  * Scoring connect used to call the external Scoring Service
  */
+@Component
 public class ScoringConnectorImpl implements ScoringConnector {
 
     public static Logger LOG = LoggerFactory.getLogger(ScoringServiceImpl.class);

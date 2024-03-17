@@ -35,6 +35,8 @@ public class CSVHandlerServiceImpl implements CSVHandlerService {
     @Override
     public List<UserMessageInput> userMessageInputs() {
 
+        LOG.info("Reading input file with path: [{}]", csvPathInput);
+
         final File file = new File(csvPathInput);
 
         try {

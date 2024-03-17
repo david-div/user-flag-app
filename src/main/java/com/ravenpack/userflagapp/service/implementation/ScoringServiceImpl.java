@@ -7,6 +7,7 @@ import com.ravenpack.userflagapp.model.TranslatedMessage;
 import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.service.MessageTranslationService;
 import com.ravenpack.userflagapp.service.ScoringService;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Service responsible for aggregation the message scores
  */
+@Service
 public class ScoringServiceImpl implements ScoringService {
 
     private final MessageTranslationService messageTranslationService;

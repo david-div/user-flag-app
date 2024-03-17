@@ -6,9 +6,11 @@ import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.CSVHandlerService;
 import com.ravenpack.userflagapp.service.ScoringService;
 import com.ravenpack.userflagapp.service.UserMessageService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserMessageServiceImpl implements UserMessageService {
 
     private final CSVHandlerService csvHandlerService;

@@ -4,6 +4,7 @@ import com.ravenpack.userflagapp.connector.MessageTranslationConnector;
 import com.ravenpack.userflagapp.model.TranslatedMessage;
 import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.service.MessageTranslationService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Service responsible for getting the translated message
  */
+@Service
 public class MessageTranslationServiceImpl implements MessageTranslationService {
 
     private final MessageTranslationConnector messageTranslationConnector;
