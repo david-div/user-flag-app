@@ -14,6 +14,6 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        userMessageService.getOffensiveMessageScoresCSV();
+        userMessageService.getOffensiveMessageScoresCsv();
     }
 }

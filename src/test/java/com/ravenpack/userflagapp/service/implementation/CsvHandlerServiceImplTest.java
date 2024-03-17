@@ -11,14 +11,14 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.linesOf;
 
-class CSVHandlerServiceImplTest {
+class CsvHandlerServiceImplTest {
 
     private final static String testFilePathInput = "src/test/resources/input/input.csv";
     private final static String testFilePathOutput = "src/test/resources/output/output.csv";
-    private final CSVHandlerServiceImpl sut = new CSVHandlerServiceImpl(testFilePathInput, testFilePathOutput);
+    private final CsvHandlerServiceImpl sut = new CsvHandlerServiceImpl(testFilePathInput, testFilePathOutput);
 
     @Test
-    void userMessageInputsShouldMapTheCSVToUserMessageInput() {
+    void userMessageInputsShouldMapTheCsvToUserMessageInput() {
         final List<UserMessageInput> actual = sut.userMessageInputs();
 
         assertThat(actual.size()).isEqualTo(4);

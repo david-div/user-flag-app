@@ -5,7 +5,7 @@ import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
 import com.ravenpack.userflagapp.model.UserMessageInput;
-import com.ravenpack.userflagapp.service.CSVHandlerService;
+import com.ravenpack.userflagapp.service.CsvHandlerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,13 +18,13 @@ import java.io.Writer;
 import java.util.List;
 
 @Service
-public class CSVHandlerServiceImpl implements CSVHandlerService {
-    public static final Logger LOG = LoggerFactory.getLogger(CSVHandlerServiceImpl.class);
+public class CsvHandlerServiceImpl implements CsvHandlerService {
+    public static final Logger LOG = LoggerFactory.getLogger(CsvHandlerServiceImpl.class);
 
     private final String csvPathInput;
     private final String csvPathOutput;
 
-    public CSVHandlerServiceImpl(
+    public CsvHandlerServiceImpl(
             @Value("${csv.file.input}") String csvPathInput,
             @Value("${csv.file.output}") String csvPathOutput
     ) {

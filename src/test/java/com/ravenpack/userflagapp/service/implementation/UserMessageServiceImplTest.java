@@ -3,7 +3,7 @@ package com.ravenpack.userflagapp.service.implementation;
 import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
 import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.model.UserMessageInput;
-import com.ravenpack.userflagapp.service.CSVHandlerService;
+import com.ravenpack.userflagapp.service.CsvHandlerService;
 import com.ravenpack.userflagapp.service.ScoringService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 class UserMessageServiceImplTest {
 
     @Mock
-    private CSVHandlerService csvHandlerServiceMock;
+    private CsvHandlerService csvHandlerServiceMock;
 
     @Mock
     private ScoringService scoringServiceMock;
@@ -29,7 +29,7 @@ class UserMessageServiceImplTest {
     private UserMessageServiceImpl sut;
 
     @Test
-    void getOffensiveMessageScoresCSVShouldCallTheCorrectServices() {
+    void getOffensiveMessageScoresCsvShouldCallTheCorrectServices() {
         final List<UserMessageInput> userMessageInputs = new ArrayList<>();
         final AggregatedUserMessageOutput aggregatedUserMessageOutput = new AggregatedUserMessageOutput("1", 1, 1f);
 
@@ -38,7 +38,7 @@ class UserMessageServiceImplTest {
         when(csvHandlerServiceMock.userMessageInputs()).thenReturn(userMessageInputs);
         when(scoringServiceMock.getAggregatedScores(userMessage)).thenReturn(List.of(aggregatedUserMessageOutput));
 
-        sut.getOffensiveMessageScoresCSV();
+        sut.getOffensiveMessageScoresCsv();
 
         verify(csvHandlerServiceMock, atLeastOnce()).userMessageInputs();
         verify(csvHandlerServiceMock, atLeastOnce()).writeAggregateUserMessageScores(List.of(aggregatedUserMessageOutput));
