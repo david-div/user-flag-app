@@ -2,7 +2,6 @@ package com.ravenpack.userflagapp.service.implementation;
 
 import com.ravenpack.userflagapp.connector.MessageTranslationConnector;
 import com.ravenpack.userflagapp.connector.ScoringConnector;
-import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
 import com.ravenpack.userflagapp.model.MessageScore;
 import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.service.ScoringService;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Service responsible for aggregation the message scores
@@ -27,18 +25,11 @@ public class ScoringServiceImpl implements ScoringService {
         this.messageTranslationConnector = messageTranslationConnector;
     }
 
-    @Override
-    public List<AggregatedUserMessageOutput> getAggregatedScores(final List<UserMessage> userMessages) {
-        final Map<String, MessageScore> messageScores = getMessageScores(userMessages);
-
-//      TODO: need to check if opencsv can handle a map
-        return aggregatedUserMessageMapper(messageScores);
-    }
-
     /**
-     * Takes the translated messages and returns the aggregate message score, which
+     * Takes the user messages and returns the aggregate message score, which
      * consists of total number of messages and total score
      */
+    @Override
     public Map<String, MessageScore> getMessageScores(final List<UserMessage> userMessages) {
         final Map<String, MessageScore> messageScore = new HashMap<>();
         final int totalStartingMessages = 1;
@@ -65,16 +56,4 @@ public class ScoringServiceImpl implements ScoringService {
 
         return messageScore;
     }
-
-    /**
-     * TODO: consider removing this mapper and write straight to the csv
-     */
-    private List<AggregatedUserMessageOutput> aggregatedUserMessageMapper(Map<String, MessageScore> messageScoreMap) {
-        return messageScoreMap
-                .entrySet()
-                .stream()
-                .map(messageScore -> new AggregatedUserMessageOutput(messageScore.getKey(), messageScore.getValue().totalMessages(), messageScore.getValue().averageScore()))
-                .collect(Collectors.toList());
-    }
-
 }

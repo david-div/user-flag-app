@@ -1,6 +1,7 @@
 package com.ravenpack.userflagapp.service.implementation;
 
 import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
+import com.ravenpack.userflagapp.model.MessageScore;
 import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.CsvHandlerService;
@@ -12,7 +13,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static org.mockito.Mockito.*;
 
@@ -34,13 +37,15 @@ class UserMessageServiceImplTest {
         final AggregatedUserMessageOutput aggregatedUserMessageOutput = new AggregatedUserMessageOutput("1", 1, 1f);
 
         final List<UserMessage> userMessage = new ArrayList<>();
+        final Map<String, MessageScore> messageScore = Collections.EMPTY_MAP;
+
 
         when(csvHandlerServiceMock.userMessageInputs()).thenReturn(userMessageInputs);
-        when(scoringServiceMock.getAggregatedScores(userMessage)).thenReturn(List.of(aggregatedUserMessageOutput));
+        when(scoringServiceMock.getMessageScores(userMessage)).thenReturn(messageScore);
 
         sut.getOffensiveMessageScoresCsv();
 
         verify(csvHandlerServiceMock, atLeastOnce()).userMessageInputs();
-        verify(csvHandlerServiceMock, atLeastOnce()).writeAggregateUserMessageScores(List.of(aggregatedUserMessageOutput));
+        verify(csvHandlerServiceMock, atLeastOnce()).writeAggregateUserMessageScores(messageScore);
     }
 }

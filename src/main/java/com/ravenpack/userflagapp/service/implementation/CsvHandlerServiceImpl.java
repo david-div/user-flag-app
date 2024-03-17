@@ -1,11 +1,11 @@
 package com.ravenpack.userflagapp.service.implementation;
 
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
-import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
+import com.ravenpack.userflagapp.model.MessageScore;
 import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.CsvHandlerService;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.Writer;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class CsvHandlerServiceImpl implements CsvHandlerService {
@@ -50,20 +52,19 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
     }
 
     @Override
-    public void writeAggregateUserMessageScores(List<AggregatedUserMessageOutput> aggregatedUserMessageOutput) {
-        LOG.info("Writing csv file with output: [{}]", aggregatedUserMessageOutput);
+    public void writeAggregateUserMessageScores(final Map<String, MessageScore> aggregatedUserMessages) {
+        LOG.info("Writing csv file with output: [{}]", aggregatedUserMessages);
 
-        final CustomCsvMappingStrategy<AggregatedUserMessageOutput> mappingStrategy = new CustomCsvMappingStrategy<>();
-        mappingStrategy.setType(AggregatedUserMessageOutput.class);
+        try (CSVPrinter csvPrinter = new CSVPrinter(new FileWriter(csvPathOutput), CSVFormat.DEFAULT)) {
+            csvPrinter.printRecord("user_id", "total_messages", "avg_score");
 
-        try (Writer writer = new FileWriter(csvPathOutput)) {
-            final StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
-                    .withMappingStrategy(mappingStrategy)
-                    .withApplyQuotesToAll(false)
-                    .build();
-            beanToCsv.write(aggregatedUserMessageOutput);
-        } catch (Exception e) {
-            LOG.error("Unable to write to file");
+            final Set<String> userIds = aggregatedUserMessages.keySet();
+
+            for (String userId : userIds) {
+                csvPrinter.printRecord(userId, aggregatedUserMessages.get(userId).totalMessages(), aggregatedUserMessages.get(userId).averageScore());
+            }
+        } catch (IOException e) {
+            LOG.error("Unable to write to file: [{}]", e);
             throw new RuntimeException(e);
         }
     }

@@ -2,7 +2,6 @@ package com.ravenpack.userflagapp.service.implementation;
 
 import com.ravenpack.userflagapp.connector.MessageTranslationConnector;
 import com.ravenpack.userflagapp.connector.ScoringConnector;
-import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
 import com.ravenpack.userflagapp.model.MessageScore;
 import com.ravenpack.userflagapp.model.UserMessage;
 import org.junit.jupiter.api.Test;
@@ -32,44 +31,17 @@ class ScoringServiceImplTest {
     private ScoringServiceImpl sut;
 
     @Test
-    void getMessageScoresShouldReturnTheMessageScoreMap() {
-        when(scoringConnectorMock.getMessageScore(any())).thenReturn(1f);
-
-        var actual = sut.getMessageScores(userMessages());
-        var expected = messagesScores();
-
-        assertThat(actual.get("1")).isEqualTo(expected.get("1"));
-        assertThat(actual.get("2")).isEqualTo(expected.get("2"));
-        assertThat(actual.get("3")).isEqualTo(expected.get("3"));
-    }
-
-    @Test
-    void getAggregatedScoresShouldReTurnTheAggregatedScoresList() {
+    void getAggregatedScoresShouldReTurnTheAggregatedScores() {
         when(messageTranslatorConnectorMock.translate(any(String.class))).thenReturn("message translated");
-        when(scoringConnectorMock.getMessageScore(any(String.class))).thenReturn(0.5f);
+        when(scoringConnectorMock.getMessageScore(any(String.class))).thenReturn(1.0f);
 
-        final List<AggregatedUserMessageOutput> actual = sut.getAggregatedScores(userMessageInput());
-
-        final List<AggregatedUserMessageOutput> expected = List.of(
-                new AggregatedUserMessageOutput("1", 1, 0.5f),
-                new AggregatedUserMessageOutput("2", 2, 0.5f),
-                new AggregatedUserMessageOutput("3", 3, 0.5f)
-        );
+        final Map<String, MessageScore> actual = sut.getMessageScores(userMessages());
+        final Map<String, MessageScore> expected = messagesScores();
 
         assertThat(actual).isEqualTo(expected);
     }
 
     private static List<UserMessage> userMessages() {
-        return List.of(
-                new UserMessage("1", "message 1"),
-                new UserMessage("2", "message 2 a"),
-                new UserMessage("2", "message 2 b"),
-                new UserMessage("3", "message 3 a"),
-                new UserMessage("3", "message 3 b"),
-                new UserMessage("3", "message 3 c"));
-    }
-
-    private static List<UserMessage> userMessageInput() {
         return List.of(
                 new UserMessage("1", "message 1"),
                 new UserMessage("2", "message 2 a"),

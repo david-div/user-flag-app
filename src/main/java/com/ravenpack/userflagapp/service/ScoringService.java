@@ -1,10 +1,11 @@
 package com.ravenpack.userflagapp.service;
 
-import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
+import com.ravenpack.userflagapp.model.MessageScore;
 import com.ravenpack.userflagapp.model.UserMessage;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ScoringService {
-    List<AggregatedUserMessageOutput> getAggregatedScores(List<UserMessage> userMessageInputs);
+    Map<String, MessageScore> getMessageScores(List<UserMessage> userMessageInputs);
 }
