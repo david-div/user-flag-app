@@ -4,7 +4,7 @@ import com.ravenpack.userflagapp.connector.ScoringConnector;
 import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
 import com.ravenpack.userflagapp.model.MessageScore;
 import com.ravenpack.userflagapp.model.TranslatedMessage;
-import com.ravenpack.userflagapp.model.UserMessageInput;
+import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.service.MessageTranslationService;
 import com.ravenpack.userflagapp.service.ScoringService;
 
@@ -27,8 +27,8 @@ public class ScoringServiceImpl implements ScoringService {
     }
 
     @Override
-    public List<AggregatedUserMessageOutput> getAggregatedScores(final List<UserMessageInput> userMessageInputs) {
-        final List<TranslatedMessage> translatedMessages = messageTranslationService.translateMessages(userMessageInputs);
+    public List<AggregatedUserMessageOutput> getAggregatedScores(final List<UserMessage> userMessages) {
+        final List<TranslatedMessage> translatedMessages = messageTranslationService.translateMessages(userMessages);
 
         final Map<String, MessageScore> messageScores = getMessageScores(translatedMessages);
 

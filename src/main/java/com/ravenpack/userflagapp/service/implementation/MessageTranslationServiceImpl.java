@@ -2,7 +2,7 @@ package com.ravenpack.userflagapp.service.implementation;
 
 import com.ravenpack.userflagapp.connector.MessageTranslationConnector;
 import com.ravenpack.userflagapp.model.TranslatedMessage;
-import com.ravenpack.userflagapp.model.UserMessageInput;
+import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.service.MessageTranslationService;
 
 import java.util.ArrayList;
@@ -23,13 +23,13 @@ public class MessageTranslationServiceImpl implements MessageTranslationService 
      * We could call the scoring service here in the same loop?
      */
     @Override
-    public List<TranslatedMessage> translateMessages(List<UserMessageInput> userMessageInputs) {
+    public List<TranslatedMessage> translateMessages(List<UserMessage> userMessage) {
         final List<TranslatedMessage> translatedMessages = new ArrayList<>();
 
-        for (final UserMessageInput userMessageInput : userMessageInputs) {
-            final String translatedMessage = translateMessage(userMessageInput.getMessage());
+        for (final UserMessage userMessageInput : userMessage) {
+            final String translatedMessage = translateMessage(userMessageInput.message());
             translatedMessages.add(
-                    new TranslatedMessage(userMessageInput.getUserId(), translatedMessage)
+                    new TranslatedMessage(userMessageInput.userId(), translatedMessage)
             );
         }
 

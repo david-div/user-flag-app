@@ -2,7 +2,7 @@ package com.ravenpack.userflagapp.service;
 
 import com.ravenpack.userflagapp.connector.MessageTranslationConnector;
 import com.ravenpack.userflagapp.model.TranslatedMessage;
-import com.ravenpack.userflagapp.model.UserMessageInput;
+import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.service.implementation.MessageTranslationServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,11 +26,11 @@ class MessageTranslationServiceImplTest {
 
     @Test
     void translateMessages() {
-        final List<UserMessageInput> userMessageInputs = List.of(new UserMessageInput("1", "message"));
+        final List<UserMessage> userMessage = List.of(new UserMessage("1", "message"));
 
         when(messageTranslationConnectorMock.translate("message")).thenReturn("message translated");
 
-        final List<TranslatedMessage> actual = sut.translateMessages(userMessageInputs);
+        final List<TranslatedMessage> actual = sut.translateMessages(userMessage);
 
         Assertions.assertThat(actual.get(0).message()).isEqualTo("message translated");
     }

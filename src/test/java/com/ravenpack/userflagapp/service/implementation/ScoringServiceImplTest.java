@@ -4,7 +4,7 @@ import com.ravenpack.userflagapp.connector.ScoringConnector;
 import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
 import com.ravenpack.userflagapp.model.MessageScore;
 import com.ravenpack.userflagapp.model.TranslatedMessage;
-import com.ravenpack.userflagapp.model.UserMessageInput;
+import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.service.MessageTranslationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,14 +70,14 @@ class ScoringServiceImplTest {
                 new TranslatedMessage("3", "message 3 c"));
     }
 
-    private static List<UserMessageInput> userMessageInput() {
+    private static List<UserMessage> userMessageInput() {
         return List.of(
-                new UserMessageInput("1", "message 1"),
-                new UserMessageInput("2", "message 2 a"),
-                new UserMessageInput("2", "message 2 b"),
-                new UserMessageInput("3", "message 3 a"),
-                new UserMessageInput("3", "message 3 b"),
-                new UserMessageInput("3", "message 3 c"));
+                new UserMessage("1", "message 1"),
+                new UserMessage("2", "message 2 a"),
+                new UserMessage("2", "message 2 b"),
+                new UserMessage("3", "message 3 a"),
+                new UserMessage("3", "message 3 b"),
+                new UserMessage("3", "message 3 c"));
     }
 
     private static Map<String, MessageScore> messagesScores() {

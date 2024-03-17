@@ -1,5 +1,6 @@
 package com.ravenpack.userflagapp.service.implementation;
 
+import com.ravenpack.userflagapp.mapper.UserMessageMapper;
 import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
 import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.CSVHandlerService;
@@ -22,9 +23,10 @@ public class UserMessageServiceImpl implements UserMessageService {
     public void getOffensiveMessageScoresCSV() {
         // getting the csv
         final List<UserMessageInput> userMessageInputs = csvHandlerService.userMessageInputs();
-
         // business logic
-        final List<AggregatedUserMessageOutput> aggregateUserMessage = scoringService.getAggregatedScores(userMessageInputs);
+        final List<AggregatedUserMessageOutput> aggregateUserMessage = scoringService.getAggregatedScores(
+                UserMessageMapper.fromUserMessageInput(userMessageInputs)
+        );
 
         // writing the csv to file
         csvHandlerService.writeAggregateUserMessageScores(aggregateUserMessage);

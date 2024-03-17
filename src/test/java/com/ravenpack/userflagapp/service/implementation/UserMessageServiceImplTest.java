@@ -1,6 +1,7 @@
 package com.ravenpack.userflagapp.service.implementation;
 
 import com.ravenpack.userflagapp.model.AggregatedUserMessageOutput;
+import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.CSVHandlerService;
 import com.ravenpack.userflagapp.service.ScoringService;
@@ -32,8 +33,10 @@ class UserMessageServiceImplTest {
         final List<UserMessageInput> userMessageInputs = new ArrayList<>();
         final AggregatedUserMessageOutput aggregatedUserMessageOutput = new AggregatedUserMessageOutput("1", 1, 1f);
 
+        final List<UserMessage> userMessage = new ArrayList<>();
+
         when(csvHandlerServiceMock.userMessageInputs()).thenReturn(userMessageInputs);
-        when(scoringServiceMock.getAggregatedScores(userMessageInputs)).thenReturn(List.of(aggregatedUserMessageOutput));
+        when(scoringServiceMock.getAggregatedScores(userMessage)).thenReturn(List.of(aggregatedUserMessageOutput));
 
         sut.getOffensiveMessageScoresCSV();
 
