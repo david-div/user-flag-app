@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Scoring connect used to call the external Scoring Service
@@ -29,6 +30,17 @@ public class ScoringConnectorImpl implements ScoringConnector {
         LOG.info("Getting message score for message: [{}]", message);
         LOG.warn("End point is currently mocked");
 
-        return new Random().nextFloat();
+        float minLatencyExpectedMs = 50f / 1000f;
+        float maxLatencyExpectedMs = 200f / 1000f;
+
+        final double mockLatencyDelayInMs = new Random().nextFloat(minLatencyExpectedMs, maxLatencyExpectedMs);
+
+        try {
+            TimeUnit.MILLISECONDS.sleep((long) mockLatencyDelayInMs);
+            return new Random().nextFloat();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        
     }
 }

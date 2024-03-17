@@ -53,7 +53,7 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
     public void writeAggregateUserMessageScores(List<AggregatedUserMessageOutput> aggregatedUserMessageOutput) {
         LOG.info("Writing csv file with output: [{}]", aggregatedUserMessageOutput);
 
-        final CustomMappingStrategy<AggregatedUserMessageOutput> mappingStrategy = new CustomMappingStrategy<>();
+        final CustomCsvMappingStrategy<AggregatedUserMessageOutput> mappingStrategy = new CustomCsvMappingStrategy<>();
         mappingStrategy.setType(AggregatedUserMessageOutput.class);
 
         try (Writer writer = new FileWriter(csvPathOutput)) {
