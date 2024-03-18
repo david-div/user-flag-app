@@ -18,7 +18,7 @@ import static com.ravenpack.userflagapp.helper.LatencyHelper.MOCK_LATENCY_MS;
 @Component
 public class MessageScoreConnectorImpl implements MessageScoreConnector {
 
-    public static Logger LOG = LoggerFactory.getLogger(MessageScoringServiceImpl.class);
+    public static final Logger LOG = LoggerFactory.getLogger(MessageScoringServiceImpl.class);
 
     /**
      * Currently mocked, which will return a random float between 0 - 1

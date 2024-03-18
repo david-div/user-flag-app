@@ -5,6 +5,8 @@ import com.ravenpack.userflagapp.connector.MessageTranslationConnector;
 import com.ravenpack.userflagapp.model.AggregatedMessageScore;
 import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.service.MessageScoringService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -17,6 +19,7 @@ import java.util.Map;
 @Service
 public class MessageScoringServiceImpl implements MessageScoringService {
 
+    public static final Logger LOG = LoggerFactory.getLogger(MessageScoringServiceImpl.class);
     private final MessageScoreConnector messageScoreConnector;
     private final MessageTranslationConnector messageTranslationConnector;
 
@@ -35,6 +38,7 @@ public class MessageScoringServiceImpl implements MessageScoringService {
      */
     @Override
     public Map<String, AggregatedMessageScore> getAggregatedMessageScores(final List<UserMessage> userMessages) {
+        LOG.info("Aggregating the user messages [{}]", userMessages);
         final Map<String, AggregatedMessageScore> messageScore = new HashMap<>();
         final int totalStartingMessages = 1;
 

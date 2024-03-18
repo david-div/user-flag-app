@@ -15,6 +15,7 @@ import static com.ravenpack.userflagapp.helper.LatencyHelper.MOCK_LATENCY_MS;
  */
 @Component
 public class MessageTranslationConnectorImpl implements MessageTranslationConnector {
+
     public static final Logger LOG = LoggerFactory.getLogger(MessageTranslationConnectorImpl.class);
 
     /**

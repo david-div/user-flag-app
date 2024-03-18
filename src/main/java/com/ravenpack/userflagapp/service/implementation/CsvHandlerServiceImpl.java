@@ -25,8 +25,8 @@ import java.util.Set;
  */
 @Service
 public class CsvHandlerServiceImpl implements CsvHandlerService {
-    public static final Logger LOG = LoggerFactory.getLogger(CsvHandlerServiceImpl.class);
 
+    public static final Logger LOG = LoggerFactory.getLogger(CsvHandlerServiceImpl.class);
     private final String csvPathInput;
     private final String csvPathOutput;
 
