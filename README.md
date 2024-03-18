@@ -56,3 +56,11 @@ csv.file.output=src/main/resources/output/output.csv
 gradlew.bat bootRun
 ```
 
+## Testing the application
+
+### Starting the test runner
+
+```
+./gradlew test
+```
+
