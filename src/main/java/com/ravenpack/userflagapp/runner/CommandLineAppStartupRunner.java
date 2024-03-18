@@ -4,6 +4,9 @@ import com.ravenpack.userflagapp.service.UserMessageService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+/**
+ * Run on startup of the application
+ */
 @Component
 public class CommandLineAppStartupRunner implements CommandLineRunner {
     private final UserMessageService userMessageService;

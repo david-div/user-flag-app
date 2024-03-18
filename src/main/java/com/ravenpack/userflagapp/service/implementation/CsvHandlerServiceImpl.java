@@ -38,6 +38,11 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
         this.csvPathOutput = csvPathOutput;
     }
 
+    /**
+     * Reads the csv from the location set in {@link #csvPathInput}
+     *
+     * @return a list of user message inputs
+     */
     @Override
     public List<UserMessageInput> userMessageInputs() {
         LOG.info("Reading input file with path: [{}]", csvPathInput);
@@ -69,6 +74,11 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
         return userMessageInputs;
     }
 
+    /**
+     * Writes to the csv set in {@link #csvPathOutput}
+     *
+     * @param aggregatedUserMessages the values to be written to the csv
+     */
     @Override
     public void writeAggregateUserMessageScores(final Map<String, MessageScoreOutput> aggregatedUserMessages) {
         LOG.info("Writing csv file with output: [{}] to path [{}]", aggregatedUserMessages, csvPathOutput);
@@ -93,3 +103,6 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
         }
     }
 }
+
+// update readme - breakup hugh methods into private functions
+// more comments?

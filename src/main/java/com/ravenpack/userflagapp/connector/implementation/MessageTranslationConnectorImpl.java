@@ -17,6 +17,12 @@ import static com.ravenpack.userflagapp.helper.LatencyHelper.MOCK_LATENCY_MS;
 public class MessageTranslationConnectorImpl implements MessageTranslationConnector {
     public static final Logger LOG = LoggerFactory.getLogger(MessageTranslationConnectorImpl.class);
 
+    /**
+     * Currently mocked, which will just return the value of the string + " translated"
+     *
+     * @param message to be translated
+     * @return translated message to English
+     */
     @Override
     @Cacheable("translatedMessages")
     public String translate(String message) {

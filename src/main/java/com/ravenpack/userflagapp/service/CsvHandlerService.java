@@ -6,6 +6,9 @@ import com.ravenpack.userflagapp.model.UserMessageInput;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Manages the reading and writing of the csv file
+ */
 public interface CsvHandlerService {
     List<UserMessageInput> userMessageInputs();
 

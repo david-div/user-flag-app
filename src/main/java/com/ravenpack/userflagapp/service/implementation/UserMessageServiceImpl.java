@@ -27,6 +27,10 @@ public class UserMessageServiceImpl implements UserMessageService {
         this.scoringService = scoringService;
     }
 
+    /**
+     * Called on startup, which orchestrates the reading, aggregating messages
+     * and writing of the csv.
+     */
     @Override
     public void getOffensiveMessageScoresCsv() {
         final List<UserMessageInput> userMessageInputs = csvHandlerService.userMessageInputs();

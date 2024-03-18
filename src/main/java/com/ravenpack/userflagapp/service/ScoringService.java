@@ -6,6 +6,9 @@ import com.ravenpack.userflagapp.model.UserMessage;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Service used to score the user messages
+ */
 public interface ScoringService {
-    Map<String, MessageScore> getMessageScores(List<UserMessage> userMessageInputs);
+    Map<String, MessageScore> getMessageScores(List<UserMessage> userMessages);
 }

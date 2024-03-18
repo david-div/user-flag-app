@@ -1,7 +1,7 @@
 package com.ravenpack.userflagapp.service;
 
 /**
- * Entry point and orchestration service.
+ * Interface used as the entry point of the application
  */
 public interface UserMessageService {
     void getOffensiveMessageScoresCsv();
