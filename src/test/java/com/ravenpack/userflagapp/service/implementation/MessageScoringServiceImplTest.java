@@ -1,6 +1,6 @@
 package com.ravenpack.userflagapp.service.implementation;
 
-import com.ravenpack.userflagapp.connector.MessageScoringConnector;
+import com.ravenpack.userflagapp.connector.MessageScoreConnector;
 import com.ravenpack.userflagapp.connector.MessageTranslationConnector;
 import com.ravenpack.userflagapp.model.AggregatedMessageScore;
 import com.ravenpack.userflagapp.model.UserMessage;
@@ -25,7 +25,7 @@ class MessageScoringServiceImplTest {
     private MessageTranslationConnector messageTranslatorConnectorMock;
 
     @Mock
-    private MessageScoringConnector messageScoringConnectorMock;
+    private MessageScoreConnector messageScoreConnectorMock;
 
     @InjectMocks
     private MessageScoringServiceImpl sut;
@@ -33,7 +33,7 @@ class MessageScoringServiceImplTest {
     @Test
     void getAggregatedScoresShouldReTurnTheAggregatedScores() {
         when(messageTranslatorConnectorMock.translate(any(String.class))).thenReturn("message translated");
-        when(messageScoringConnectorMock.getMessageScore(any(String.class))).thenReturn(1.0f);
+        when(messageScoreConnectorMock.getMessageScore(any(String.class))).thenReturn(1.0f);
 
         final Map<String, AggregatedMessageScore> actual = sut.getAggregatedMessageScores(userMessages());
         final Map<String, AggregatedMessageScore> expected = messagesScores();

@@ -1,6 +1,6 @@
 package com.ravenpack.userflagapp.service.implementation;
 
-import com.ravenpack.userflagapp.connector.MessageScoringConnector;
+import com.ravenpack.userflagapp.connector.MessageScoreConnector;
 import com.ravenpack.userflagapp.connector.MessageTranslationConnector;
 import com.ravenpack.userflagapp.model.AggregatedMessageScore;
 import com.ravenpack.userflagapp.model.UserMessage;
@@ -17,12 +17,12 @@ import java.util.Map;
 @Service
 public class MessageScoringServiceImpl implements MessageScoringService {
 
-    private final MessageScoringConnector messageScoringConnector;
+    private final MessageScoreConnector messageScoreConnector;
     private final MessageTranslationConnector messageTranslationConnector;
 
-    public MessageScoringServiceImpl(final MessageScoringConnector messageScoringConnector,
+    public MessageScoringServiceImpl(final MessageScoreConnector messageScoreConnector,
                                      final MessageTranslationConnector messageTranslationConnector) {
-        this.messageScoringConnector = messageScoringConnector;
+        this.messageScoreConnector = messageScoreConnector;
         this.messageTranslationConnector = messageTranslationConnector;
     }
 
@@ -40,7 +40,7 @@ public class MessageScoringServiceImpl implements MessageScoringService {
 
         for (UserMessage userMessage : userMessages) {
             final String translatedMessage = messageTranslationConnector.translate(userMessage.message());
-            final float score = messageScoringConnector.getMessageScore(translatedMessage);
+            final float score = messageScoreConnector.getMessageScore(translatedMessage);
             final String userId = userMessage.userId();
 
             if (!messageScore.containsKey(userId)) {
