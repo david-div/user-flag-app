@@ -21,7 +21,7 @@ class UserMessageServiceIT {
 
     @Test
     void getOffensiveMessageScoresCSVShouldWriteTheCsv() {
-        userMessageService.getOffensiveMessageScoresCsv();
+        userMessageService.getOffensiveAggregatedMessageScoresCsv();
 
         final File file = new File(testFilePathOutput);
 

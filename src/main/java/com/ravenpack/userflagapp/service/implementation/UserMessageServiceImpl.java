@@ -32,7 +32,7 @@ public class UserMessageServiceImpl implements UserMessageService {
      * and writing of the csv.
      */
     @Override
-    public void getOffensiveMessageScoresCsv() {
+    public void getOffensiveAggregatedMessageScoresCsv() {
         final List<UserMessageInput> userMessageInputs = csvHandlerService.userMessageInputs();
 
         final Map<String, AggregatedMessageScore> aggregateUserMessage = messageScoringService.getAggregatedMessageScores(

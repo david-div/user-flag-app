@@ -42,7 +42,7 @@ class UserMessageServiceImplTest {
         when(csvHandlerServiceMock.userMessageInputs()).thenReturn(userMessageInputs);
         when(messageScoringServiceMock.getAggregatedMessageScores(userMessage)).thenReturn(messageScore);
 
-        sut.getOffensiveMessageScoresCsv();
+        sut.getOffensiveAggregatedMessageScoresCsv();
 
         verify(csvHandlerServiceMock, atLeastOnce()).userMessageInputs();
         verify(csvHandlerServiceMock, atLeastOnce()).writeAggregateUserMessageScores(messageScoreOutput);
