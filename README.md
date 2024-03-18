@@ -29,8 +29,9 @@ Where:
 - total_messages: integer. The total number of messages written by the user.
 - avg_score: float. The average offensiveness score for all the messages of the same user.
 
-> ⚠️ The translation and scoring services are both currently mocked. The scoring service will
-> be responding with random float between 0 - 1
+> ⚠️ The translation and scoring services are both currently mocked.
+>  - The translation service will be responding with the same message + " translated"
+> - The scoring service will be responding with random float between 0 - 1
 
 The input and output locations can be set in the `application.properties`
 
