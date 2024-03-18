@@ -40,7 +40,6 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
 
     /**
      * Reads the csv from the location set in {@link #csvPathInput}
-     *
      * @return a list of user message inputs
      */
     @Override
@@ -76,7 +75,6 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
 
     /**
      * Writes to the csv set in {@link #csvPathOutput}
-     *
      * @param aggregatedUserMessages the values to be written to the csv
      */
     @Override
@@ -103,6 +101,3 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
         }
     }
 }
-
-// update readme - breakup hugh methods into private functions
-// more comments?
