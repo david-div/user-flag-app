@@ -20,20 +20,23 @@ public class ScoringServiceImpl implements ScoringService {
     private final ScoringConnector scoringConnector;
     private final MessageTranslationConnector messageTranslationConnector;
 
-    public ScoringServiceImpl(final ScoringConnector scoringConnector, MessageTranslationConnector messageTranslationConnector) {
+    public ScoringServiceImpl(final ScoringConnector scoringConnector,
+                              final MessageTranslationConnector messageTranslationConnector) {
         this.scoringConnector = scoringConnector;
         this.messageTranslationConnector = messageTranslationConnector;
     }
 
     /**
-     * Takes the user messages and returns the aggregate message score, which
-     * consists of total number of messages and total score
+     * Aggregates the user messages, first calling the translation service to
+     * translate the message, the making a call to get the message score.
+     *
+     * @param userMessages a list containing the user id and user message
+     * @return a map by userId, with the total number of messages, score and average
      */
     @Override
     public Map<String, MessageScore> getMessageScores(final List<UserMessage> userMessages) {
         final Map<String, MessageScore> messageScore = new HashMap<>();
         final int totalStartingMessages = 1;
-        final int messageIncrement = 1;
 
         for (UserMessage userMessage : userMessages) {
             final String translatedMessage = messageTranslationConnector.translate(userMessage.message());
@@ -44,16 +47,22 @@ public class ScoringServiceImpl implements ScoringService {
                 final MessageScore startingScore = new MessageScore(totalStartingMessages, score);
                 messageScore.put(userId, startingScore);
             } else {
-                final MessageScore messageScoreUser = messageScore.get(userId);
-                final int totalMessages = messageScoreUser.totalMessages();
-                final float totalScore = messageScoreUser.totalScore();
-
-                final MessageScore updatedMessageScore = new MessageScore(totalMessages + messageIncrement, totalScore + score);
-
-                messageScore.put(userId, updatedMessageScore);
+                incrementTotalMessageScore(messageScore, userId, score);
             }
         }
 
         return messageScore;
+    }
+
+    private static void incrementTotalMessageScore(final Map<String, MessageScore> messageScore, final String userId, float score) {
+        final int messageIncrement = 1;
+
+        final MessageScore currentMessageScore = messageScore.get(userId);
+        final int totalMessages = currentMessageScore.totalMessages();
+        final float totalScore = currentMessageScore.totalScore();
+
+        final MessageScore updatedMessageScore = new MessageScore(totalMessages + messageIncrement, totalScore + score);
+
+        messageScore.put(userId, updatedMessageScore);
     }
 }
