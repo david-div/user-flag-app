@@ -19,6 +19,7 @@ public class MessageTranslationConnectorImpl implements MessageTranslationConnec
 
     /**
      * Currently mocked, which will just return the value of the string + " translated"
+     *
      * @param message to be translated
      * @return translated message to English
      */

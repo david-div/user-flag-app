@@ -29,6 +29,7 @@ public class ScoringServiceImpl implements ScoringService {
     /**
      * Aggregates the user messages, first calling the translation service to
      * translate the message, the making a call to get the message score.
+     *
      * @param userMessages a list containing the user id and user message
      * @return a map by userId, with the total number of messages, score and average
      */

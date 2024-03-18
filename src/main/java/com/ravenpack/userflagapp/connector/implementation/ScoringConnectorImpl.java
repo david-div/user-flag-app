@@ -22,6 +22,7 @@ public class ScoringConnectorImpl implements ScoringConnector {
 
     /**
      * Currently mocked, which will return a random float between 0 - 1
+     *
      * @param message a message in english
      * @return float score how offensive the message is valued between 0 - 1
      */
@@ -37,6 +38,6 @@ public class ScoringConnectorImpl implements ScoringConnector {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        
+
     }
 }

@@ -8,8 +8,8 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class UserFlagAppApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(UserFlagAppApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(UserFlagAppApplication.class, args);
+    }
 
 }

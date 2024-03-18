@@ -10,6 +10,7 @@ The application takes a csv input in the following format:
 | 1       | user message 1 |
 
 Where:
+
 - user_id: string. The identifier of the user
 - message: string. The message written by the user
 
