@@ -1,7 +1,7 @@
 ## Content Moderation System
 
-Application which takes a list of messages by user id, translates them (if not already in English), aggregate them
-with total amount and average score per user and write to a csv.
+Application which takes a list of messages by user id, translates them (if not already in English), aggregates them
+with total amount and average score per user and writes to a csv.
 
 The application takes a csv input in the following format:
 

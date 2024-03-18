@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ScoringConnectorImplTest {
+class MessageScoringConnectorImplTest {
 
-    private final ScoringConnectorImpl sut = new ScoringConnectorImpl();
+    private final MessageScoringConnectorImpl sut = new MessageScoringConnectorImpl();
 
     @Test
     void messageScoreShouldReturnARandomFloat() {

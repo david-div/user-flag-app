@@ -1,6 +1,6 @@
 package com.ravenpack.userflagapp.service.implementation;
 
-import com.ravenpack.userflagapp.model.MessageScoreOutput;
+import com.ravenpack.userflagapp.model.AggregatedMessageScoreOutput;
 import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.CsvHandlerService;
 import org.apache.commons.csv.CSVFormat;
@@ -80,7 +80,7 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
      * @param aggregatedUserMessages the values to be written to the csv
      */
     @Override
-    public void writeAggregateUserMessageScores(final Map<String, MessageScoreOutput> aggregatedUserMessages) {
+    public void writeAggregateUserMessageScores(final Map<String, AggregatedMessageScoreOutput> aggregatedUserMessages) {
         LOG.info("Writing csv file with output: [{}] to path [{}]", aggregatedUserMessages, csvPathOutput);
         final String[] headers = {"user_id", "total_messages", "avg_score"};
 
@@ -90,7 +90,7 @@ public class CsvHandlerServiceImpl implements CsvHandlerService {
             final Set<String> userIds = aggregatedUserMessages.keySet();
 
             for (String userId : userIds) {
-                final MessageScoreOutput messageScore = aggregatedUserMessages.get(userId);
+                final AggregatedMessageScoreOutput messageScore = aggregatedUserMessages.get(userId);
 
                 csvPrinter.printRecord(
                         userId,

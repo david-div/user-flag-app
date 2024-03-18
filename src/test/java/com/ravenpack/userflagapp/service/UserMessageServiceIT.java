@@ -20,7 +20,7 @@ class UserMessageServiceIT {
     private UserMessageService userMessageService;
 
     @Test
-    void getOffensiveMessageScoresCSV() {
+    void getOffensiveMessageScoresCSVShouldWriteTheCsv() {
         userMessageService.getOffensiveMessageScoresCsv();
 
         final File file = new File(testFilePathOutput);

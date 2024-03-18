@@ -1,11 +1,11 @@
 package com.ravenpack.userflagapp.service.implementation;
 
-import com.ravenpack.userflagapp.mapper.MessageScoreMapper;
+import com.ravenpack.userflagapp.mapper.AggregatedMessageScoreMapper;
 import com.ravenpack.userflagapp.mapper.UserMessageInputMapper;
-import com.ravenpack.userflagapp.model.MessageScore;
+import com.ravenpack.userflagapp.model.AggregatedMessageScore;
 import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.CsvHandlerService;
-import com.ravenpack.userflagapp.service.ScoringService;
+import com.ravenpack.userflagapp.service.MessageScoringService;
 import com.ravenpack.userflagapp.service.UserMessageService;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +20,11 @@ import java.util.Map;
 public class UserMessageServiceImpl implements UserMessageService {
 
     private final CsvHandlerService csvHandlerService;
-    private final ScoringService scoringService;
+    private final MessageScoringService messageScoringService;
 
-    public UserMessageServiceImpl(final CsvHandlerService csvHandlerService, final ScoringService scoringService) {
+    public UserMessageServiceImpl(final CsvHandlerService csvHandlerService, final MessageScoringService messageScoringService) {
         this.csvHandlerService = csvHandlerService;
-        this.scoringService = scoringService;
+        this.messageScoringService = messageScoringService;
     }
 
     /**
@@ -35,12 +35,12 @@ public class UserMessageServiceImpl implements UserMessageService {
     public void getOffensiveMessageScoresCsv() {
         final List<UserMessageInput> userMessageInputs = csvHandlerService.userMessageInputs();
 
-        final Map<String, MessageScore> aggregateUserMessage = scoringService.getMessageScores(
+        final Map<String, AggregatedMessageScore> aggregateUserMessage = messageScoringService.getAggregatedMessageScores(
                 UserMessageInputMapper.toUserMessage(userMessageInputs)
         );
 
         csvHandlerService.writeAggregateUserMessageScores(
-                MessageScoreMapper.toMessageScoreOutput(aggregateUserMessage)
+                AggregatedMessageScoreMapper.toMessageScoreOutput(aggregateUserMessage)
         );
     }
 }

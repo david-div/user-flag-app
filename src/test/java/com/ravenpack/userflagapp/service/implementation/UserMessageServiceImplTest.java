@@ -1,11 +1,11 @@
 package com.ravenpack.userflagapp.service.implementation;
 
-import com.ravenpack.userflagapp.model.MessageScore;
-import com.ravenpack.userflagapp.model.MessageScoreOutput;
+import com.ravenpack.userflagapp.model.AggregatedMessageScore;
+import com.ravenpack.userflagapp.model.AggregatedMessageScoreOutput;
 import com.ravenpack.userflagapp.model.UserMessage;
 import com.ravenpack.userflagapp.model.UserMessageInput;
 import com.ravenpack.userflagapp.service.CsvHandlerService;
-import com.ravenpack.userflagapp.service.ScoringService;
+import com.ravenpack.userflagapp.service.MessageScoringService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,7 +26,7 @@ class UserMessageServiceImplTest {
     private CsvHandlerService csvHandlerServiceMock;
 
     @Mock
-    private ScoringService scoringServiceMock;
+    private MessageScoringService messageScoringServiceMock;
 
     @InjectMocks
     private UserMessageServiceImpl sut;
@@ -36,11 +36,11 @@ class UserMessageServiceImplTest {
         final List<UserMessageInput> userMessageInputs = new ArrayList<>();
 
         final List<UserMessage> userMessage = new ArrayList<>();
-        final Map<String, MessageScore> messageScore = Collections.EMPTY_MAP;
-        final Map<String, MessageScoreOutput> messageScoreOutput = Collections.EMPTY_MAP;
+        final Map<String, AggregatedMessageScore> messageScore = Collections.EMPTY_MAP;
+        final Map<String, AggregatedMessageScoreOutput> messageScoreOutput = Collections.EMPTY_MAP;
 
         when(csvHandlerServiceMock.userMessageInputs()).thenReturn(userMessageInputs);
-        when(scoringServiceMock.getMessageScores(userMessage)).thenReturn(messageScore);
+        when(messageScoringServiceMock.getAggregatedMessageScores(userMessage)).thenReturn(messageScore);
 
         sut.getOffensiveMessageScoresCsv();
 

@@ -1,6 +1,6 @@
 package com.ravenpack.userflagapp.service.implementation;
 
-import com.ravenpack.userflagapp.model.MessageScoreOutput;
+import com.ravenpack.userflagapp.model.AggregatedMessageScoreOutput;
 import com.ravenpack.userflagapp.model.UserMessageInput;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
@@ -29,11 +29,11 @@ class CsvHandlerServiceImplTest {
 
     @Test
     void writeAggregateUserMessageScoresShouldWriteTheCsv() {
-        final HashMap<String, MessageScoreOutput> aggregatedMessageScoreOutput = new HashMap<>() {{
-            put("1", new MessageScoreOutput(2, 1.5f));
-            put("2", new MessageScoreOutput(4, 3.2f));
-            put("3", new MessageScoreOutput(6, 6.0f));
-            put("4", new MessageScoreOutput(8, 6.2f));
+        final HashMap<String, AggregatedMessageScoreOutput> aggregatedMessageScoreOutput = new HashMap<>() {{
+            put("1", new AggregatedMessageScoreOutput(2, 1.5f));
+            put("2", new AggregatedMessageScoreOutput(4, 3.2f));
+            put("3", new AggregatedMessageScoreOutput(6, 6.0f));
+            put("4", new AggregatedMessageScoreOutput(8, 6.2f));
         }};
 
         sut.writeAggregateUserMessageScores(aggregatedMessageScoreOutput);

@@ -1,7 +1,7 @@
 package com.ravenpack.userflagapp.connector.implementation;
 
-import com.ravenpack.userflagapp.connector.ScoringConnector;
-import com.ravenpack.userflagapp.service.implementation.ScoringServiceImpl;
+import com.ravenpack.userflagapp.connector.MessageScoringConnector;
+import com.ravenpack.userflagapp.service.implementation.MessageScoringServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -13,12 +13,12 @@ import java.util.concurrent.TimeUnit;
 import static com.ravenpack.userflagapp.helper.LatencyHelper.MOCK_LATENCY_MS;
 
 /**
- * An implementation of the {@link ScoringConnector} that will make a call to the external service
+ * An implementation of the {@link MessageScoringConnector} that will make a call to the external service
  */
 @Component
-public class ScoringConnectorImpl implements ScoringConnector {
+public class MessageScoringConnectorImpl implements MessageScoringConnector {
 
-    public static Logger LOG = LoggerFactory.getLogger(ScoringServiceImpl.class);
+    public static Logger LOG = LoggerFactory.getLogger(MessageScoringServiceImpl.class);
 
     /**
      * Currently mocked, which will return a random float between 0 - 1
