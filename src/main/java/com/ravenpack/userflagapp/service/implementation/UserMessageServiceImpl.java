@@ -35,9 +35,15 @@ public class UserMessageServiceImpl implements UserMessageService {
     public void getOffensiveAggregatedMessageScoresCsv() {
         final List<UserMessageInput> userMessageInputs = csvHandlerService.userMessageInputs();
 
-        final Map<String, AggregatedMessageScore> aggregateUserMessage = messageScoringService.getAggregatedMessageScores(
-                UserMessageInputMapper.toUserMessage(userMessageInputs)
-        );
+        final Map<String, AggregatedMessageScore> aggregateUserMessage;
+
+        try {
+            aggregateUserMessage = messageScoringService.getAggregatedMessageScores(
+                    UserMessageInputMapper.toUserMessage(userMessageInputs)
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         csvHandlerService.writeAggregateUserMessageScores(
                 AggregatedMessageScoreMapper.toMessageScoreOutput(aggregateUserMessage)

@@ -4,8 +4,10 @@ import com.ravenpack.userflagapp.connector.MessageTranslationConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import static com.ravenpack.userflagapp.helper.LatencyHelper.MOCK_LATENCY_MS;
@@ -26,14 +28,15 @@ public class MessageTranslationConnectorImpl implements MessageTranslationConnec
      */
     @Override
     @Cacheable("translatedMessages")
-    public String translate(String message) {
+    @Async("asyncTaskExecutor")
+    public CompletableFuture<String> translate(String message) {
         LOG.info("Translating message: [{}]", message);
         LOG.warn("End point is currently mocked");
 
         try {
             TimeUnit.MILLISECONDS.sleep(MOCK_LATENCY_MS);
-            return message + " translated";
-        } catch (InterruptedException e) {
+            return CompletableFuture.completedFuture(message + " translated");
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 

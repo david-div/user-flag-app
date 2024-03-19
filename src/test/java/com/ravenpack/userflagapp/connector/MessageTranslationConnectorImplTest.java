@@ -11,6 +11,6 @@ class MessageTranslationConnectorImplTest {
 
     @Test
     void translateShouldTranslateTheMessage() {
-        assertThat(sut.translate("message")).isEqualTo("message translated");
+        assertThat(sut.translate("message")).isCompletedWithValue("message translated");
     }
 }

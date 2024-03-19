@@ -32,7 +32,7 @@ class UserMessageServiceImplTest {
     private UserMessageServiceImpl sut;
 
     @Test
-    void getOffensiveMessageScoresCsvShouldCallTheCorrectServices() {
+    void getOffensiveMessageScoresCsvShouldCallTheCorrectServices() throws Exception {
         final List<UserMessageInput> userMessageInputs = new ArrayList<>();
 
         final List<UserMessage> userMessage = new ArrayList<>();

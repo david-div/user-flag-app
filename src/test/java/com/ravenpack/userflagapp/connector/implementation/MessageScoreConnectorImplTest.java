@@ -9,7 +9,7 @@ class MessageScoreConnectorImplTest {
     private final MessageScoreConnectorImpl sut = new MessageScoreConnectorImpl();
 
     @Test
-    void messageScoreShouldReturnARandomFloat() {
-        assertThat(sut.getMessageScore("message to be scored")).isBetween(0f, 1f);
+    void messageScoreShouldReturnARandomFloat() throws Exception {
+        assertThat(sut.getMessageScore("message to be scored").get()).isBetween(0f, 1f);
     }
 }

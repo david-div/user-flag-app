@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.concurrent.CompletableFuture.completedFuture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
@@ -31,9 +32,11 @@ class MessageScoringServiceImplTest {
     private MessageScoringServiceImpl sut;
 
     @Test
-    void getAggregatedScoresShouldReTurnTheAggregatedScores() {
-        when(messageTranslatorConnectorMock.translate(any(String.class))).thenReturn("message translated");
-        when(messageScoreConnectorMock.getMessageScore(any(String.class))).thenReturn(1.0f);
+    void getAggregatedScoresShouldReTurnTheAggregatedScores() throws Exception {
+        when(messageTranslatorConnectorMock.translate(any(String.class))).thenReturn(
+                completedFuture("message translated"));
+        when(messageScoreConnectorMock.getMessageScore(any(String.class)))
+                .thenReturn(completedFuture(1.0f));
 
         final Map<String, AggregatedMessageScore> actual = sut.getAggregatedMessageScores(userMessages());
         final Map<String, AggregatedMessageScore> expected = messagesScores();

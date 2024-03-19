@@ -5,9 +5,11 @@ import com.ravenpack.userflagapp.service.implementation.MessageScoringServiceImp
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import static com.ravenpack.userflagapp.helper.LatencyHelper.MOCK_LATENCY_MS;
@@ -28,14 +30,15 @@ public class MessageScoreConnectorImpl implements MessageScoreConnector {
      */
     @Override
     @Cacheable("messageScores")
-    public float getMessageScore(final String message) {
+    @Async("asyncTaskExecutor")
+    public CompletableFuture<Float> getMessageScore(final String message) {
         LOG.info("Getting message score for message: [{}]", message);
         LOG.warn("End point is currently mocked");
 
         try {
             TimeUnit.MILLISECONDS.sleep(MOCK_LATENCY_MS);
-            return new Random().nextFloat();
-        } catch (InterruptedException e) {
+            return CompletableFuture.completedFuture(new Random().nextFloat());
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 

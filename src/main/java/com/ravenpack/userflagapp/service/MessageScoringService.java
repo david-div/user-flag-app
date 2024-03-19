@@ -10,5 +10,5 @@ import java.util.Map;
  * Service used to score the user messages
  */
 public interface MessageScoringService {
-    Map<String, AggregatedMessageScore> getAggregatedMessageScores(List<UserMessage> userMessages);
+    Map<String, AggregatedMessageScore> getAggregatedMessageScores(List<UserMessage> userMessages) throws Exception;
 }
