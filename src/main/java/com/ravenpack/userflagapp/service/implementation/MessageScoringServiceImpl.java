@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * An implementation of the {@link MessageScoringServiceImpl} responsible aggregating the message scores
@@ -38,14 +39,16 @@ public class MessageScoringServiceImpl implements MessageScoringService {
      * @return a map by userId, with the total number of messages, score and average
      */
     @Override
-    public Map<String, AggregatedMessageScore> getAggregatedMessageScores(final List<UserMessage> userMessages) throws Exception {
+    public Map<String, AggregatedMessageScore> getAggregatedMessageScores(final List<UserMessage> userMessages) {
         LOG.info("Aggregating the user messages [{}]", userMessages);
         final Map<String, AggregatedMessageScore> messageScore = new HashMap<>();
         final int totalStartingMessages = 1;
 
         for (UserMessage userMessage : userMessages) {
             final CompletableFuture<String> translatedMessage = messageTranslationConnector.translate(userMessage.message());
-            final float score = messageScoreConnector.getMessageScore(translatedMessage.get()).get();
+
+            final float score = getScore(translatedMessage);
+
             final String userId = userMessage.userId();
 
             if (!messageScore.containsKey(userId)) {
@@ -57,6 +60,17 @@ public class MessageScoringServiceImpl implements MessageScoringService {
         }
 
         return messageScore;
+    }
+
+    private float getScore(final CompletableFuture<String> translatedMessage) {
+        try {
+            return messageScoreConnector.getMessageScore(translatedMessage.get()).get();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void incrementTotalMessageScore(final Map<String, AggregatedMessageScore> messageScore, final String userId, float score) {

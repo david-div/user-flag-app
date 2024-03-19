@@ -32,7 +32,7 @@ class MessageScoringServiceImplTest {
     private MessageScoringServiceImpl sut;
 
     @Test
-    void getAggregatedScoresShouldReTurnTheAggregatedScores() throws Exception {
+    void getAggregatedScoresShouldReTurnTheAggregatedScores() {
         when(messageTranslatorConnectorMock.translate(any(String.class))).thenReturn(
                 completedFuture("message translated"));
         when(messageScoreConnectorMock.getMessageScore(any(String.class)))
