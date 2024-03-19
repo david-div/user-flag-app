@@ -11,13 +11,24 @@ import java.util.concurrent.Executor;
 @EnableAsync
 public class AsyncConfig {
 
-    @Bean("asyncTaskExecutor")
-    public Executor asyncTaskExecutor() {
+    @Bean("messageScoreThreadPoolTaskExecutor")
+    public Executor messageScoreThreadPoolTaskExecutor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setCorePoolSize(2);
         taskExecutor.setQueueCapacity(500);
         taskExecutor.setMaxPoolSize(4);
-        taskExecutor.setThreadNamePrefix("AsyncTaskThread-");
+        taskExecutor.setThreadNamePrefix("MessageScoreTaskExecutor-");
+        taskExecutor.initialize();
+        return taskExecutor;
+    }
+
+    @Bean("messageTranslationThreadPoolTaskExecutor")
+    public Executor messageTranslationThreadPoolTaskExecutor() {
+        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+        taskExecutor.setCorePoolSize(2);
+        taskExecutor.setQueueCapacity(500);
+        taskExecutor.setMaxPoolSize(4);
+        taskExecutor.setThreadNamePrefix("MessageTranslationTaskExecutor-");
         taskExecutor.initialize();
         return taskExecutor;
     }

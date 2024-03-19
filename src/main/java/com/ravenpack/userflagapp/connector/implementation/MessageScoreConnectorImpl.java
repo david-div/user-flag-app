@@ -30,7 +30,7 @@ public class MessageScoreConnectorImpl implements MessageScoreConnector {
      */
     @Override
     @Cacheable("messageScores")
-    @Async("asyncTaskExecutor")
+    @Async("messageScoreThreadPoolTaskExecutor")
     public CompletableFuture<Float> getMessageScore(final String message) {
         LOG.info("Getting message score for message: [{}]", message);
         LOG.warn("End point is currently mocked");

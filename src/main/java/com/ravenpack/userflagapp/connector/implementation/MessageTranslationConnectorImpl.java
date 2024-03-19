@@ -28,7 +28,7 @@ public class MessageTranslationConnectorImpl implements MessageTranslationConnec
      */
     @Override
     @Cacheable("translatedMessages")
-    @Async("asyncTaskExecutor")
+    @Async("messageTranslationThreadPoolTaskExecutor")
     public CompletableFuture<String> translate(String message) {
         LOG.info("Translating message: [{}]", message);
         LOG.warn("End point is currently mocked");
