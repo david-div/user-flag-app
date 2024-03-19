@@ -44,11 +44,10 @@ public class MessageScoringServiceImpl implements MessageScoringService {
         final Map<String, AggregatedMessageScore> messageScore = new HashMap<>();
         final int totalStartingMessages = 1;
 
-        for (UserMessage userMessage : userMessages) {
+        userMessages.parallelStream().forEach(userMessage -> {
             final CompletableFuture<String> translatedMessage = messageTranslationConnector.translate(userMessage.message());
 
             final float score = getScore(translatedMessage);
-
             final String userId = userMessage.userId();
 
             if (!messageScore.containsKey(userId)) {
@@ -57,14 +56,14 @@ public class MessageScoringServiceImpl implements MessageScoringService {
             } else {
                 incrementTotalMessageScore(messageScore, userId, score);
             }
-        }
+        });
 
         return messageScore;
     }
 
     private float getScore(final CompletableFuture<String> translatedMessage) {
         try {
-            return messageScoreConnector.getMessageScore(translatedMessage.get()).get();
+            return messageScoreConnector.getMessageScore(translatedMessage.get()).join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new RuntimeException(e);
