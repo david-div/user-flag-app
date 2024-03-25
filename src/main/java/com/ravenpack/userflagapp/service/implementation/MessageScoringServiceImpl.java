@@ -44,7 +44,7 @@ public class MessageScoringServiceImpl implements MessageScoringService {
         final Map<String, AggregatedMessageScore> messageScore = new HashMap<>();
         final int totalStartingMessages = 1;
 
-        userMessages.parallelStream().forEach(userMessage -> {
+        userMessages.stream().forEach(userMessage -> {
             final CompletableFuture<String> translatedMessage = messageTranslationConnector.translate(userMessage.message());
 
             final float score = getScore(translatedMessage);
